@@ -16,13 +16,13 @@
     "license": "MIT",
     "autoload": {
         "psr-4": {
-            "Jeffleyd\\ESLikeEloquent\\": "src/"
+            "Jeffleyd\\EsLikeEloquent\\": "src/"
         }
     },
     "extra": {
         "laravel": {
             "providers": [
-                "Jeffleyd\\ESLikeEloquent\\EsQueryProvider"
+                "Jeffleyd\\EsLikeEloquent\\EsQueryProvider"
             ]
         }
     },

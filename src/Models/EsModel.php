@@ -1,6 +1,6 @@
 <?php
 
-namespace Jeffleyd\ESLikeEloquent\Models;
+namespace Jeffleyd\EsLikeEloquent\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Jeffleyd\ESLikeEloquent\EsQuery;

@@ -1,6 +1,6 @@
 <?php
 
-namespace Jeffleyd\ESLikeEloquent;
+namespace Jeffleyd\EsLikeEloquent;
 
 use Elasticsearch\Client;
 use Elasticsearch\ClientBuilder;
