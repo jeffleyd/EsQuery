@@ -40,7 +40,7 @@ $response = $build->create([
 
 ##### Find your document
 ```
-$build = new ESQuery('MY_INDEX');<br><br>
+$build = new ESQuery('MY_INDEX');
 $response = $build->where('parent_id', 1)->first(); // Example 1 <br>
 $response = $build->where('parent_id', '=', 1)->first(); // Example 2 <br>
 $response = $build->where('parent_id', 1)->get(); // Example 3 <br>
