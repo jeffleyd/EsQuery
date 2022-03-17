@@ -12,7 +12,7 @@ composer jeffleyd/esquery
 ###### For more information about mapping types: https://www.elastic.co/guide/en/elasticsearch/reference/current/mapping-types.html
 
 ```
-$build = new ESQuery('MY_INDEX'); <br><br>
+$build = new ESQuery('MY_INDEX');
 $response = $build->createIndex([
         'mappings' => [
             'properties' => [
@@ -31,7 +31,7 @@ $response = $build->createIndex([
 ##### Now you can create your first document
 
 ```
-$build = new ESQuery('MY_INDEX');<br><br>
+$build = new ESQuery('MY_INDEX');
 $response = $build->create([
         'parent_id' => 1,
         'created_at' => '2022-02-26 23:44:00',
@@ -49,7 +49,7 @@ $response = $build->where('created_at', '>=' '2022-02-26'))->get(); // Example 4
 
 ##### Performing an aggregation
 ```
-$build = new ESQuery('MY_INDEX');<br><br>
+$build = new ESQuery('MY_INDEX');
 $response = $build->where('parent_id', 1)->sum('price', 'total_price')->get(); // Use get() for aggregations <br>
 ```
 
@@ -62,8 +62,8 @@ $response = $build->delete(5); // Example 2 delete by ID <br>
 
 ##### Delete your index
 ```
-$build = new ESQuery('MY_INDEX');<br><br>
-$response = $build->deleteIndex(); <br>
+$build = new ESQuery('MY_INDEX');
+$response = $build->deleteIndex(); 
 ```
 
 <br><br>
@@ -91,3 +91,7 @@ $response = $build->deleteIndex(); <br>
 [x] whereNotExists <br>
 [x] whereMissing <br>
 [x] between <br>
+
+#### ELASTIC SEARCH
+Site: https://www.elastic.co/guide/en/elasticsearch/reference/current/index.html
+Version: 8.1
