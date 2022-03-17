@@ -4,7 +4,7 @@ namespace Jeffleyd\EsLikeEloquent;
 
 use Illuminate\Support\ServiceProvider;
 
-abstract class EsQueryProvider extends ServiceProvider
+class EsQueryProvider extends ServiceProvider
 {
     public function boot()
     {
