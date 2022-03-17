@@ -7,6 +7,14 @@ facilitating searches in ElasticSearch's <strong>Lucene</strong>.
 composer jeffleyd/esquery
 ```
 
+#### PUBLISH THE FILE CONFIG
+
+```
+php artisan vendor:publish --tag="esquery-provider"
+```
+
+Access the config folder and change the settings of the esquery.php file.
+
 #### USAGE EXAMPLES
 ##### First create a mapping for your index
 ###### For more information about mapping types: https://www.elastic.co/guide/en/elasticsearch/reference/current/mapping-types.html
@@ -94,4 +102,4 @@ $response = $build->deleteIndex();
 
 #### ELASTIC SEARCH
 Site: https://www.elastic.co/guide/en/elasticsearch/reference/current/index.html
-Version: 8.1
+<br>Version: 8.1

@@ -19,6 +19,13 @@
             "Jeffleyd\\ESLikeEloquent\\": "src/"
         }
     },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Jeffleyd\\ESLikeEloquent\\EsQueryProvider"
+            ]
+        }
+    },
     "authors": [
         {
             "name": "Jefferson T.S",
