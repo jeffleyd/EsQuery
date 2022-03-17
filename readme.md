@@ -4,7 +4,7 @@ facilitating searches in ElasticSearch's <strong>Lucene</strong>.
 <br><br>
 
 ```
-composer jeffleyd/esquery
+composer require jeffleyd/esquery
 ```
 
 #### PUBLISH THE FILE CONFIG
