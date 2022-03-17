@@ -75,14 +75,14 @@ $response = $build->deleteIndex();
 #### DOCUMENT
 [x] Create <br>
 [x] Update <br>
-[x] Delete by ID
-[x] Delete by Query
+[x] Delete by ID <br>
+[x] Delete by Query <br>
 
 #### TYPE SEARCH
-[x] <strong>FIRST</strong> (with/without conditions)
-[x] <strong>GET</strong> (with/without conditions)
-[x] <strong>PAGINATION</strong> (with/without conditions)
-[x] <strong>AGGREGATION</strong> MAX / MIN / SUM / AVG / COUNT
+[x] <strong>FIRST</strong> (with/without conditions) <br>
+[x] <strong>GET</strong> (with/without conditions) <br>
+[x] <strong>PAGINATION</strong> (with/without conditions) <br>
+[x] <strong>AGGREGATION</strong> MAX / MIN / SUM / AVG / COUNT <br>
 
 #### CONDITIONS
 [x] where <br>
