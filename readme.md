@@ -41,23 +41,23 @@ $response = $build->create([
 ##### Find your document
 ```
 $build = new ESQuery('MY_INDEX');
-$response = $build->where('parent_id', 1)->first(); // Example 1 <br>
-$response = $build->where('parent_id', '=', 1)->first(); // Example 2 <br>
-$response = $build->where('parent_id', 1)->get(); // Example 3 <br>
-$response = $build->where('created_at', '>=' '2022-02-26'))->get(); // Example 4 <br>
+$response = $build->where('parent_id', 1)->first(); // Example 1
+$response = $build->where('parent_id', '=', 1)->first(); // Example 2
+$response = $build->where('parent_id', 1)->get(); // Example 3
+$response = $build->where('created_at', '>=' '2022-02-26'))->get(); // Example 4
 ```
 
 ##### Performing an aggregation
 ```
 $build = new ESQuery('MY_INDEX');
-$response = $build->where('parent_id', 1)->sum('price', 'total_price')->get(); // Use get() for aggregations <br>
+$response = $build->where('parent_id', 1)->sum('price', 'total_price')->get(); // Use get() for aggregations
 ```
 
 ##### Delete your document
 ```
-$build = new ESQuery('MY_INDEX');<br><br>
-$response = $build->where('parent_id', 1)->delete(); // Example 1 delete with conditions <br>
-$response = $build->delete(5); // Example 2 delete by ID <br>
+$build = new ESQuery('MY_INDEX');
+$response = $build->where('parent_id', 1)->delete(); // Example 1 delete with conditions
+$response = $build->delete(5); // Example 2 delete by ID
 ```
 
 ##### Delete your index
@@ -75,14 +75,14 @@ $response = $build->deleteIndex();
 #### DOCUMENT
 [x] Create <br>
 [x] Update <br>
-[x] Delete by ID <br>
-[x] Delete by Query <br>
+[x] Delete by ID
+[x] Delete by Query
 
 #### TYPE SEARCH
-[x] <strong>FIRST</strong> (with/without conditions) <br>
-[x] <strong>GET</strong> (with/without conditions) <br>
-[x] <strong>PAGINATION</strong> (with/without conditions) <br>
-[x] <strong>AGGREGATION</strong> MAX / MIN / SUM / AVG / COUNT <br>
+[x] <strong>FIRST</strong> (with/without conditions)
+[x] <strong>GET</strong> (with/without conditions)
+[x] <strong>PAGINATION</strong> (with/without conditions)
+[x] <strong>AGGREGATION</strong> MAX / MIN / SUM / AVG / COUNT
 
 #### CONDITIONS
 [x] where <br>
