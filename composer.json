@@ -1,0 +1,29 @@
+{
+    "name": "jeffleyd/esquery",
+    "description": "Use syntax similar to eloquent, using the elastic search service.",
+    "keywords": ["elastic search", "laravel", "elastic search eloquent", "elastic search laravel",  "laravel elastic search"],
+    "require": {
+        "php": ">=8.0",
+        "elasticsearch/elasticsearch": "^8.0",
+        "illuminate/support": "^9.0|^8.0",
+        "illuminate/database": "*"
+    },
+    "require-dev": {
+        "laravel/legacy-factories": "^1.0.4",
+        "mockery/mockery": "^1.4",
+        "phpunit/phpunit": "^9.4"
+    },
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Jeffleyd\\ESLikeEloquent\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Jefferson T.S",
+            "email": "jeffleyd@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev"
+}
