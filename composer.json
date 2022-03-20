@@ -6,6 +6,7 @@
         "php": ">=8.0",
         "elasticsearch/elasticsearch": "^8.0",
         "illuminate/support": "^9.0|^8.0",
+        "illuminate/pagination": "^9.0",
         "illuminate/database": "*"
     },
     "require-dev": {

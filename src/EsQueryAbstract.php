@@ -2,6 +2,10 @@
 
 namespace Jeffleyd\EsLikeEloquent;
 
+use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Facades\Request;
+
 class EsQueryAbstract extends EsConditions
 {
     /**
@@ -50,26 +54,20 @@ class EsQueryAbstract extends EsConditions
 
     /**
      * @param array $hits
-     * @param int $size
-     * @param int $page
-     * @return array
+     * @param int $limit
+     * @param array $options
+     * @return LengthAwarePaginator
      */
-    protected function outPutPaginate(array $hits, int $size, int $page): array
+    protected function outPutPaginate(array $hits, int $limit, array $options = []): LengthAwarePaginator
     {
+        $page = Request::input('page') ?: (Paginator::resolveCurrentPage() ?: 1);
+        $items = collect($this->outPut($hits));
+
         if (count($hits)) {
             $total = $hits['hits']['total']['value'];
-
-            $result = [
-                'total' => $total,
-                'per_page' => $size,
-                'current_page' => $page,
-                'last_page' => intval(ceil($total/$size)),
-                'data' => $this->outPut($hits)
-            ];
-
-            return $result;
+            return new LengthAwarePaginator($items, $total, $limit, $page, $options);
         }
 
-        return $hits;
+        return new LengthAwarePaginator($items, 0, $limit, $page, $options);
     }
 }

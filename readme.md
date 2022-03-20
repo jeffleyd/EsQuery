@@ -82,6 +82,7 @@ $response = $build->deleteIndex();
 
 #### DOCUMENT
 [x] Create <br>
+[x] Create Many <br>
 [x] Update <br>
 [x] Delete by ID <br>
 [x] Delete by Query <br>

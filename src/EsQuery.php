@@ -4,6 +4,8 @@ namespace Jeffleyd\EsLikeEloquent;
 
 use Elasticsearch\Client;
 use Elasticsearch\ClientBuilder;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Facades\Request;
 
 class EsQuery extends EsQueryAbstract
 {
@@ -75,16 +77,17 @@ class EsQuery extends EsQueryAbstract
     }
 
     /**
-     * @param int $size
-     * @param int $page
-     * @return array
+     * @param int $limit [Total per page]
+     * @return LengthAwarePaginator
      */
-    public function paginate(int $size, int $page = 1): array
+    public function paginate(int $limit): LengthAwarePaginator
     {
         $this->hasCondition();
-        $this->query['body']['size'] = $size;
-        $this->query['body']['from'] = $page > 1 ? $size * ($page-1) : 0;
-        return $this->outPutPaginate($this->client->search($this->query), $size, $page);
+        $page = Request::input('page');
+
+        $this->query['body']['size'] = $limit;
+        $this->query['body']['from'] = $page > 1 ? $limit * ($page-1) : 0;
+        return $this->outPutPaginate($this->client->search($this->query), $limit);
     }
 
     /**
@@ -102,8 +105,34 @@ class EsQuery extends EsQueryAbstract
         if ($attr) {
             $this->query[] = $attr;
         }
-        $this->updateQuery('id', $body['id']);
+        $this->query['id'] = $body['id'];
         return $this->client->create($this->query);
+    }
+
+    /**
+     * @param array $items
+     * @return array
+     */
+    public function createMany(array $items): array
+    {
+        foreach ($items as $index => $item) {
+
+            if (!isset($item['id'])) {
+                $_id = date('ymdHis');
+                $item['id'] = intval($_id.$index);
+            }
+
+            $this->query['body'][] = [
+                'create' => [
+                    '_index' => $this->index,
+                    '_id' => $item['id'],
+                ],
+            ];
+
+            $this->query['body'][] = $item;
+        }
+        unset($this->query['body']['query']);
+        return $this->client->bulk($this->query);
     }
 
     /**
@@ -129,6 +158,11 @@ class EsQuery extends EsQueryAbstract
         ]);
     }
 
+    /**
+     * @param int|string $id
+     * @param array $body
+     * @return array
+     */
     public function update(int|string $id, array $body): array
     {
         return $this->client->update([
@@ -157,7 +191,6 @@ class EsQuery extends EsQueryAbstract
     }
 
     /**
-     * caso seja a primeira vez, crie o index por aqui e depois insira os documentos nele.
      * @param array $body
      * @return array
      */

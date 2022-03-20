@@ -23,6 +23,9 @@ class EsModel extends Model
         });
     }
 
+    /**
+     * @return EsQuery
+     */
     public function esQuery(): EsQuery
     {
         return (new EsQuery($this->table));
