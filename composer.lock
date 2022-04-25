@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "548be8273446fbb8def418a535468611",
+    "content-hash": "639bafec92532eb8d2e1a812cd2b3ba6",
     "packages": [
         {
             "name": "doctrine/inflector",
@@ -378,12 +378,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/container.git",
-                "reference": "66f9049b19fb34e74134c6eeff92a442cee068e5"
+                "reference": "dcee6b90d7a1ddbbcd5cbceda28b1c7e474f5733"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/illuminate/container/zipball/66f9049b19fb34e74134c6eeff92a442cee068e5",
-                "reference": "66f9049b19fb34e74134c6eeff92a442cee068e5",
+                "url": "https://api.github.com/repos/illuminate/container/zipball/dcee6b90d7a1ddbbcd5cbceda28b1c7e474f5733",
+                "reference": "dcee6b90d7a1ddbbcd5cbceda28b1c7e474f5733",
                 "shasum": ""
             },
             "require": {
@@ -421,7 +421,7 @@
                 "issues": "https://github.com/laravel/framework/issues",
                 "source": "https://github.com/laravel/framework"
             },
-            "time": "2022-03-03T14:08:19+00:00"
+            "time": "2022-03-18T14:48:15+00:00"
         },
         {
             "name": "illuminate/contracts",
@@ -429,12 +429,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/contracts.git",
-                "reference": "7ef269f27f8ac0e1d0217a28ff5544ea8bbd0fee"
+                "reference": "de0878799e3eaccb5efdf714c516522fa53b7c81"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/illuminate/contracts/zipball/7ef269f27f8ac0e1d0217a28ff5544ea8bbd0fee",
-                "reference": "7ef269f27f8ac0e1d0217a28ff5544ea8bbd0fee",
+                "url": "https://api.github.com/repos/illuminate/contracts/zipball/de0878799e3eaccb5efdf714c516522fa53b7c81",
+                "reference": "de0878799e3eaccb5efdf714c516522fa53b7c81",
                 "shasum": ""
             },
             "require": {
@@ -469,7 +469,7 @@
                 "issues": "https://github.com/laravel/framework/issues",
                 "source": "https://github.com/laravel/framework"
             },
-            "time": "2022-03-12T17:02:05+00:00"
+            "time": "2022-03-18T14:48:15+00:00"
         },
         {
             "name": "illuminate/database",
@@ -477,12 +477,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/database.git",
-                "reference": "8f9aba9d8764845685a7e4b1f0da44c9318376f3"
+                "reference": "63600b1827605d96a737acca26d62549ecb5e2bf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/illuminate/database/zipball/8f9aba9d8764845685a7e4b1f0da44c9318376f3",
-                "reference": "8f9aba9d8764845685a7e4b1f0da44c9318376f3",
+                "url": "https://api.github.com/repos/illuminate/database/zipball/63600b1827605d96a737acca26d62549ecb5e2bf",
+                "reference": "63600b1827605d96a737acca26d62549ecb5e2bf",
                 "shasum": ""
             },
             "require": {
@@ -537,7 +537,7 @@
                 "issues": "https://github.com/laravel/framework/issues",
                 "source": "https://github.com/laravel/framework"
             },
-            "time": "2022-03-16T16:31:30+00:00"
+            "time": "2022-03-18T13:55:28+00:00"
         },
         {
             "name": "illuminate/macroable",
@@ -586,17 +586,67 @@
             "time": "2022-02-01T14:44:21+00:00"
         },
         {
+            "name": "illuminate/pagination",
+            "version": "9.x-dev",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/illuminate/pagination.git",
+                "reference": "4662a73f3addda559e0ccccf1cc47793f73baa77"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/illuminate/pagination/zipball/4662a73f3addda559e0ccccf1cc47793f73baa77",
+                "reference": "4662a73f3addda559e0ccccf1cc47793f73baa77",
+                "shasum": ""
+            },
+            "require": {
+                "ext-json": "*",
+                "illuminate/collections": "^9.0",
+                "illuminate/contracts": "^9.0",
+                "illuminate/support": "^9.0",
+                "php": "^8.0.2"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "9.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Illuminate\\Pagination\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Taylor Otwell",
+                    "email": "taylor@laravel.com"
+                }
+            ],
+            "description": "The Illuminate Pagination package.",
+            "homepage": "https://laravel.com",
+            "support": {
+                "issues": "https://github.com/laravel/framework/issues",
+                "source": "https://github.com/laravel/framework"
+            },
+            "time": "2022-03-12T17:02:05+00:00"
+        },
+        {
             "name": "illuminate/support",
             "version": "9.x-dev",
             "source": {
                 "type": "git",
                 "url": "https://github.com/illuminate/support.git",
-                "reference": "6d38bed8bbcb81ec70c9a98f867c92300a275813"
+                "reference": "6e96b3ab3428d6b3d821772652a1c16aeccf279a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/illuminate/support/zipball/6d38bed8bbcb81ec70c9a98f867c92300a275813",
-                "reference": "6d38bed8bbcb81ec70c9a98f867c92300a275813",
+                "url": "https://api.github.com/repos/illuminate/support/zipball/6e96b3ab3428d6b3d821772652a1c16aeccf279a",
+                "reference": "6e96b3ab3428d6b3d821772652a1c16aeccf279a",
                 "shasum": ""
             },
             "require": {
@@ -652,7 +702,7 @@
                 "issues": "https://github.com/laravel/framework/issues",
                 "source": "https://github.com/laravel/framework"
             },
-            "time": "2022-03-16T16:31:30+00:00"
+            "time": "2022-03-19T13:28:16+00:00"
         },
         {
             "name": "nesbot/carbon",
@@ -660,12 +710,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/briannesbitt/Carbon.git",
-                "reference": "4a54375c21eea4811dbd1149fe6b246517554e78"
+                "reference": "0c20b8052c2201d6d3337b2a93e4884648ce6287"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/briannesbitt/Carbon/zipball/4a54375c21eea4811dbd1149fe6b246517554e78",
-                "reference": "4a54375c21eea4811dbd1149fe6b246517554e78",
+                "url": "https://api.github.com/repos/briannesbitt/Carbon/zipball/0c20b8052c2201d6d3337b2a93e4884648ce6287",
+                "reference": "0c20b8052c2201d6d3337b2a93e4884648ce6287",
                 "shasum": ""
             },
             "require": {
@@ -683,7 +733,8 @@
                 "phpmd/phpmd": "^2.9",
                 "phpstan/extension-installer": "^1.0",
                 "phpstan/phpstan": "^0.12.54 || ^1.0",
-                "phpunit/phpunit": "^7.5.20 || ^8.5.14",
+                "phpunit/php-file-iterator": "^2.0.5",
+                "phpunit/phpunit": "^7.5.20 || ^8.5.23",
                 "squizlabs/php_codesniffer": "^3.4"
             },
             "default-branch": true,
@@ -749,7 +800,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-02-13T18:13:33+00:00"
+            "time": "2022-03-12T18:16:40+00:00"
         },
         {
             "name": "psr/container",
@@ -990,12 +1041,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/console.git",
-                "reference": "3bebf4108b9e07492a2a4057d207aa5a77d146b1"
+                "reference": "99cade3898e6f0efa291485783e5956285ceb1e4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/console/zipball/3bebf4108b9e07492a2a4057d207aa5a77d146b1",
-                "reference": "3bebf4108b9e07492a2a4057d207aa5a77d146b1",
+                "url": "https://api.github.com/repos/symfony/console/zipball/99cade3898e6f0efa291485783e5956285ceb1e4",
+                "reference": "99cade3898e6f0efa291485783e5956285ceb1e4",
                 "shasum": ""
             },
             "require": {
@@ -1077,7 +1128,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2022-02-25T10:48:52+00:00"
+            "time": "2022-03-18T16:06:28+00:00"
         },
         {
             "name": "symfony/polyfill-ctype",
@@ -2950,12 +3001,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "5fc83848551ec5fc0086af8024efc9c42fcde559"
+                "reference": "ecf6a70fc97f48826b28de9a715e86f0ddcfef0d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/5fc83848551ec5fc0086af8024efc9c42fcde559",
-                "reference": "5fc83848551ec5fc0086af8024efc9c42fcde559",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/ecf6a70fc97f48826b28de9a715e86f0ddcfef0d",
+                "reference": "ecf6a70fc97f48826b28de9a715e86f0ddcfef0d",
                 "shasum": ""
             },
             "require": {
@@ -3045,7 +3096,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2022-03-15T10:09:15+00:00"
+            "time": "2022-03-20T17:26:16+00:00"
         },
         {
             "name": "sebastian/cli-parser",

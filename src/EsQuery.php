@@ -77,6 +77,17 @@ class EsQuery extends EsQueryAbstract
     }
 
     /**
+     * @param string $field
+     * @param string $order
+     * @return $this
+     */
+    public function orderBy(string $field, string $order = 'asc'): self
+    {
+        $this->query['body']['sort'][] = [$field => $order];
+        return $this;
+    }
+
+    /**
      * @param int $limit [Total per page]
      * @return LengthAwarePaginator
      */
@@ -88,6 +99,26 @@ class EsQuery extends EsQueryAbstract
         $this->query['body']['size'] = $limit;
         $this->query['body']['from'] = $page > 1 ? $limit * ($page-1) : 0;
         return $this->outPutPaginate($this->client->search($this->query), $limit);
+    }
+
+    /**
+     * @param int $limit
+     * @return \App\Services\ElasticSearch\EsQuery
+     */
+    public function limit(int $limit): self
+    {
+        $this->query['body']['size'] = $limit;
+        return $this;
+    }
+
+    /**
+     * @param int $skip
+     * @return $this
+     */
+    public function skip(int $skip): self
+    {
+        $this->query['body']['from'] = $skip;
+        return $this;
     }
 
     /**
@@ -199,6 +230,15 @@ class EsQuery extends EsQueryAbstract
         return $this->client->indices()->create([
             'index' => $this->index,
             'body' => $body
+        ]);
+    }
+
+    /**
+     * @return bool
+     */
+    public function existsIndex(): bool {
+        return $this->client->indices()->exists([
+            'index' => $this->index
         ]);
     }
 

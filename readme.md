@@ -79,6 +79,8 @@ $response = $build->deleteIndex();
 [x] Create <br>
 [x] Delete <br>
 [x] Update mapping <br>
+[x] Exists <br>
+[x] Skip <br>
 
 #### DOCUMENT
 [x] Create <br>
@@ -92,6 +94,7 @@ $response = $build->deleteIndex();
 [x] <strong>GET</strong> (with/without conditions) <br>
 [x] <strong>PAGINATION</strong> (with/without conditions) <br>
 [x] <strong>AGGREGATION</strong> MAX / MIN / SUM / AVG / COUNT <br>
+[x] <strong>LIMIT</strong><br>
 
 #### CONDITIONS
 [x] where <br>
@@ -100,6 +103,7 @@ $response = $build->deleteIndex();
 [x] whereNotExists <br>
 [x] whereMissing <br>
 [x] between <br>
+[x] orderBy <br>
 
 #### ELASTIC SEARCH
 Site: https://www.elastic.co/guide/en/elasticsearch/reference/current/index.html
