@@ -4,10 +4,10 @@
     "keywords": ["elastic search", "laravel", "elastic search eloquent", "elastic search laravel",  "laravel elastic search"],
     "require": {
         "php": ">=8.0",
-        "elasticsearch/elasticsearch": "^8.0",
-        "illuminate/support": "^9.0|^8.0",
-        "illuminate/pagination": "^9.0",
-        "illuminate/database": "*"
+        "elasticsearch/elasticsearch": "8.2.0",
+        "illuminate/support": "9.12.2",
+        "illuminate/pagination": "9.12.2",
+        "illuminate/database": "9.12.2"
     },
     "require-dev": {
         "laravel/legacy-factories": "^1.0.4",

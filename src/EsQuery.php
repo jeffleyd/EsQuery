@@ -2,23 +2,51 @@
 
 namespace Jeffleyd\EsLikeEloquent;
 
-use Elasticsearch\Client;
-use Elasticsearch\ClientBuilder;
+use Elastic\Elasticsearch\Client;
+use Elastic\Elasticsearch\ClientBuilder;
+use Elastic\Elasticsearch\Exception\AuthenticationException;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
-use Illuminate\Support\Facades\Request;
+use Jeffleyd\EsLikeEloquent\Presenters\AggregatorPresenter;
+use Jeffleyd\EsLikeEloquent\Presenters\PaginatePresenter;
+use Jeffleyd\EsLikeEloquent\Presenters\QueryPresenter;
 
-class EsQuery extends EsQueryAbstract
+class EsQuery extends EsConditions
 {
-    protected EsQuery $instance;
+
+    /**
+     * @var Client
+     */
     public Client $client;
-    public $query;
-    protected $beginConstruct;
+
+    /**
+     * Structure of the query
+     * @var array
+     */
+    public $query = [];
+
+    /**
+     * @var EsQuery
+     */
+    protected EsQuery $instance;
+
+    /**
+     * Relations to be eager loaded
+     * @var array
+     */
+    private array $with = [];
+
+    /**
+     * Array initial for constructing of the query with based variable constantScore.
+     * @var array
+     */
+    protected array $beginConstruct;
 
     /**
      * @param string $index
      * @param bool $constantScore
+     * @throws AuthenticationException
      */
-    public function __construct(string $index, protected bool $constantScore = true)
+    public function __construct(string $index, public bool $constantScore = true)
     {
         $this->index = strtolower(config('esquery.prefix').$index.config('esquery.suffix'));
         $this->client = ClientBuilder::create()
@@ -37,7 +65,7 @@ class EsQuery extends EsQueryAbstract
             $this->beginConstruct = ['query' => ['bool' => []]];
         }
 
-        $this->updateQuery('body', $this->beginConstruct);
+        $this->query['body'] = $this->beginConstruct;
 
         $this->instance = $this;
     }
@@ -48,19 +76,10 @@ class EsQuery extends EsQueryAbstract
     public function get(): array
     {
         if ($this->hasAggregator) {
-            if ($this->constantScore) {
-                if (!count($this->query['body']['query']['constant_score']['filter']['bool'])) {
-                    unset($this->query['body']['query']);
-                }
-            } else {
-                if (!count($this->query['body']['query']['bool'])) {
-                    unset($this->query['body']['query']);
-                }
-            }
-            return $this->client->search($this->query)['aggregations'];
+            return (new AggregatorPresenter($this))->getResult();
         }
-        $this->hasCondition();
-        return $this->outPut($this->client->search($this->query));
+
+        return (new QueryPresenter($this))->getResult();
     }
 
     /**
@@ -68,12 +87,20 @@ class EsQuery extends EsQueryAbstract
      */
     public function first(): array|null
     {
-        $this->hasCondition();
-        $result = $this->outPut($this->client->search($this->query));
+        $result = (new QueryPresenter($this))->getResult();
         if (isset($result[0])) {
             return $result[0];
         }
         return null;
+    }
+
+    /**
+     * @param array $field
+     */
+    public function select(array $field): EsQuery
+    {
+        $this->query['body']['fields'] = $field;
+        return $this;
     }
 
     /**
@@ -88,22 +115,15 @@ class EsQuery extends EsQueryAbstract
     }
 
     /**
-     * @param int $limit [Total per page]
      * @return LengthAwarePaginator
      */
-    public function paginate(int $limit): LengthAwarePaginator
+    public function paginate(): LengthAwarePaginator
     {
-        $this->hasCondition();
-        $page = Request::input('page');
-
-        $this->query['body']['size'] = $limit;
-        $this->query['body']['from'] = $page > 1 ? $limit * ($page-1) : 0;
-        return $this->outPutPaginate($this->client->search($this->query), $limit);
+        return (new PaginatePresenter($this))->getResult();
     }
 
     /**
      * @param int $limit
-     * @return \App\Services\ElasticSearch\EsQuery
      */
     public function limit(int $limit): self
     {
@@ -137,7 +157,7 @@ class EsQuery extends EsQueryAbstract
             $this->query[] = $attr;
         }
         $this->query['id'] = $body['id'];
-        return $this->client->create($this->query);
+        return $this->client->create($this->query)->asArray();
     }
 
     /**
@@ -163,7 +183,7 @@ class EsQuery extends EsQueryAbstract
             $this->query['body'][] = $item;
         }
         unset($this->query['body']['query']);
-        return $this->client->bulk($this->query);
+        return $this->client->bulk($this->query)->asArray();
     }
 
     /**
@@ -176,7 +196,7 @@ class EsQuery extends EsQueryAbstract
             return $this->client->deleteByQuery([
                 'index' => $this->index,
                 'body' => $this->query,
-            ]);
+            ])->asArray();
         } else {
             if (!$id) {
                 throw new \Exception('Id required for deleting from document');
@@ -186,7 +206,7 @@ class EsQuery extends EsQueryAbstract
         return $this->client->delete([
             'id' => $id,
             'index' => $this->index
-        ]);
+        ])->asArray();
     }
 
     /**
@@ -200,7 +220,7 @@ class EsQuery extends EsQueryAbstract
             'id' => $id,
             'index' => $this->index,
             'body' => $body
-        ]);
+        ])->asArray();
     }
 
     /**
@@ -218,7 +238,7 @@ class EsQuery extends EsQueryAbstract
         return $this->client->indices()->putMapping([
             'index' => $this->index,
             'body' => $body
-        ]);
+        ])->asArray();
     }
 
     /**
@@ -230,7 +250,7 @@ class EsQuery extends EsQueryAbstract
         return $this->client->indices()->create([
             'index' => $this->index,
             'body' => $body
-        ]);
+        ])->asArray();
     }
 
     /**
@@ -239,7 +259,7 @@ class EsQuery extends EsQueryAbstract
     public function existsIndex(): bool {
         return $this->client->indices()->exists([
             'index' => $this->index
-        ]);
+        ])->asBool();
     }
 
     /**
@@ -249,6 +269,6 @@ class EsQuery extends EsQueryAbstract
     {
         return $this->client->indices()->delete([
             'index' => $this->index
-        ]);
+        ])->asArray();
     }
 }
