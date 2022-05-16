@@ -42,6 +42,18 @@ class EsQuery extends EsConditions
     protected array $beginConstruct;
 
     /**
+     * Flag for verify if the query has aggregations.
+     * @var bool
+     */
+    public bool $hasAggregator = false;
+
+    /**
+     * Flag for verify if the query has conditions.
+     * @var bool
+     */
+    public bool $hasCondition = false;
+
+    /**
      * @param string $index
      * @param bool $constantScore
      * @throws AuthenticationException

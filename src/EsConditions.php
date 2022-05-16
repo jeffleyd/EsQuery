@@ -6,9 +6,6 @@ class EsConditions
 {
     const OPERATORS = ['>=', '>', '<=', '<'];
 
-    public bool $hasAggregator;
-    public bool $hasCondition;
-
     /**
      * @param string $column
      * @param string|int $value

@@ -23,7 +23,14 @@ class AggregateTransformer implements ResultTransformerContract
      */
     public function transform(Elasticsearch|Promise $result): array
     {
-        return $result->asArray()['aggregations'];
+        $resultArray = $result->asArray()['aggregations'];
+        $output = [];
+
+        foreach ($resultArray as $key => $value) {
+            $output[$key] = $value['value'];
+        }
+
+        return $output;
     }
 
     /**
