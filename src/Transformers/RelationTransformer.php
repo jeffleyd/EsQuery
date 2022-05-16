@@ -15,11 +15,14 @@ class RelationTransformer
 
     public function transform(array $resultArray): mixed
     {
+        $newResult = [];
         if (count($this->esQuery->with)) {
             foreach ($resultArray as $result) {
-                array_push($result, $this->attachRelation($result));
+                $newResult[] = $this->attachRelation($result);
             }
+            $resultArray = $newResult;
         }
+
         return $resultArray;
     }
 
@@ -30,7 +33,6 @@ class RelationTransformer
      */
     private function attachRelation(array $result): array
     {
-        $relations = [];
         foreach ($this->esQuery->with as $relation) {
 
             /** @var Model $class */
@@ -43,13 +45,14 @@ class RelationTransformer
 
             if ($relation['closure']) {
                 $closure = $relation['closure'];
-                $relations[$relationName] = $closure($queryBuild);
+                $result[$relationName] = $closure($queryBuild);
             } else {
-                $relations[$relationName] = $queryBuild->get()->toArray();
+                $result[$relationName] = $queryBuild->get()->toArray();
             }
+
         }
 
-        return $relations;
+        return $result;
     }
 
 }
