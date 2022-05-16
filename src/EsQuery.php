@@ -178,8 +178,7 @@ class EsQuery extends EsConditions
     public function create(array $body, $attr = null): array
     {
         if (!isset($body['id'])) {
-            $_id = date('ymdHis');
-            $body['id'] = intval($_id);
+            $body['id'] = time();
         }
         $this->query['body'] = $body;
         if ($attr) {
@@ -198,8 +197,7 @@ class EsQuery extends EsConditions
         foreach ($items as $index => $item) {
 
             if (!isset($item['id'])) {
-                $_id = date('ymdHis');
-                $item['id'] = intval($_id.$index);
+                $item['id'] = time();
             }
 
             $this->query['body'][] = [
