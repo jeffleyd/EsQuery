@@ -17,7 +17,7 @@ class PaginatePresenter
      * Max size of the pagination.
      * @var int
      */
-    private int $max_per_page = 100;
+    private int $max_per_page;
 
     /**
      * Total number of items per page.
@@ -36,6 +36,7 @@ class PaginatePresenter
      */
     public function __construct(public EsQuery $esQuery)
     {
+        $this->max_per_page = config('esquery.max_per_page');
         $this->page = Request::input('page') ?? $this->page;
         $this->per_page = Request::input('per_page') ?? $this->per_page;
         if ($this->per_page > $this->max_per_page) {
@@ -58,7 +59,7 @@ class PaginatePresenter
         $paginateTransform->setPerPage($this->per_page);
         $paginateTransform->setPage($this->page, $this->per_page);
 
-        $result = $this->esQuery->client->search($this->esQuery->query);
-        return $paginateTransform->transform($result);
+        $response = $this->esQuery->client->search($this->esQuery->query);
+        return $paginateTransform->transform($response);
     }
 }

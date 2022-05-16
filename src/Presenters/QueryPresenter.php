@@ -29,7 +29,7 @@ class QueryPresenter
         $conditionTransform = new ConditionTransformer($this->esQuery);
         $this->esQuery = $conditionTransform->transform();
 
-        $result = $this->esQuery->client->search($this->esQuery->query);
-        return (new QueryTransformer)->transform($result);
+        $response = $this->esQuery->client->search($this->esQuery->query);
+        return (new QueryTransformer($this->esQuery))->transform($response);
     }
 }

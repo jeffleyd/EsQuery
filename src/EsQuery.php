@@ -25,23 +25,6 @@ class EsQuery extends EsConditions
     public $query = [];
 
     /**
-     * @var EsQuery
-     */
-    protected EsQuery $instance;
-
-    /**
-     * Relations to be eager loaded
-     * @var array
-     */
-    private array $with = [];
-
-    /**
-     * Array initial for constructing of the query with based variable constantScore.
-     * @var array
-     */
-    protected array $beginConstruct;
-
-    /**
      * Flag for verify if the query has aggregations.
      * @var bool
      */
@@ -52,6 +35,23 @@ class EsQuery extends EsConditions
      * @var bool
      */
     public bool $hasCondition = false;
+
+    /**
+     * Relations to be eager loaded
+     * @var array
+     */
+    public array $with = [];
+
+    /**
+     * @var EsQuery
+     */
+    protected EsQuery $instance;
+
+    /**
+     * Array initial for constructing of the query with based variable constantScore.
+     * @var array
+     */
+    protected array $beginConstruct;
 
     /**
      * @param string $index
@@ -132,6 +132,23 @@ class EsQuery extends EsConditions
     public function paginate(): LengthAwarePaginator
     {
         return (new PaginatePresenter($this))->getResult();
+    }
+
+    /**
+     * @param string $model
+     * @param string|int $primaryKey
+     * @param string|int $foreignKey
+     * @return $this
+     */
+    public function with(string $model, string|int $primaryKey, string|int $foreignKey, \Closure $closure = null): EsQuery
+    {
+        $this->with[] = [
+            'model' => $model,
+            'primary_key' => $primaryKey,
+            'foreign_key' => $foreignKey,
+            'closure' => $closure
+        ];
+        return $this;
     }
 
     /**

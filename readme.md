@@ -74,6 +74,19 @@ $build = new ESQuery('MY_INDEX');
 $response = $build->deleteIndex(); 
 ```
 
+##### How you can attach relation
+```
+$build = new ESQuery('MY_INDEX');
+$response = $build->with('category', 'id', 'group_id')->get();
+
+OR
+
+$build = new ESQuery('MY_INDEX');
+$response = $build->with('category', 'id', 'group_id', function (QueryBuilder $query) {
+    $query->where('is_active', 1)->withTrashed->get();
+})->get();
+```
+
 <br><br>
 #### INDEX
 [x] Create <br>
@@ -104,6 +117,9 @@ $response = $build->deleteIndex();
 [x] whereMissing <br>
 [x] between <br>
 [x] orderBy <br>
+
+#### ADDITIONAL
+[x] with <br>
 
 #### ELASTIC SEARCH
 Site: https://www.elastic.co/guide/en/elasticsearch/reference/current/index.html

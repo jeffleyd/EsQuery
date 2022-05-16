@@ -24,4 +24,7 @@ return [
 
     // Suffix for name from index
     'suffix' => '',
+
+    // Max per page with paginate
+    'max_per_page' => 100,
 ];

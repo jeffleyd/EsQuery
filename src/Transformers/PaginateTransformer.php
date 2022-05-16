@@ -58,7 +58,7 @@ class PaginateTransformer implements ResultTransformerContract
      */
     private function extractHits(Elasticsearch|Promise $result): array
     {
-        return (new QueryTransformer)->transform($result);
+        return (new QueryTransformer($this->presenter->esQuery))->transform($result);
     }
 
     /**
