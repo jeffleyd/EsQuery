@@ -41,13 +41,17 @@ class RelationTransformer
             $relationName = count($arrayPath) > 1 ? $arrayPath[count($arrayPath) - 1] : $relation['model'];
             $foreignKeyValue = $result[$relation['foreign_key']];
 
+            if (!class_exists($class)) {
+                $class = $relation['model'];
+            }
+
             $queryBuild = $class::where($relation['primary_key'], $foreignKeyValue);
 
             if ($relation['closure']) {
                 $closure = $relation['closure'];
-                $result[$relationName] = $closure($queryBuild);
+                $result[strtolower($relationName)] = $closure($queryBuild);
             } else {
-                $result[$relationName] = $queryBuild->get()->toArray();
+                $result[strtolower($relationName)] = $queryBuild->get()->toArray();
             }
 
         }
