@@ -16,7 +16,6 @@ class EsMapping
     public function __construct(string $index)
     {
         $this->esQuery = new EsQuery($index);
-        $this->setDefaultAnalyzer();
     }
 
     /**
@@ -169,7 +168,7 @@ class EsMapping
      */
     public function update()
     {
-        $this->esQuery->mapping($this->mapping);
+        $this->esQuery->mapping($this->mapping['mappings']);
     }
 
     public function drop()
@@ -200,10 +199,5 @@ class EsMapping
     private function addColumn(array $type)
     {
         $this->mapping['mappings']['properties'][key($type)] = $type[key($type)];
-    }
-
-    private function baseMapping(string $type, array $mapping)
-    {
-        $this->mapping['mappings'] = ['properties' => []];
     }
 }
