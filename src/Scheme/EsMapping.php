@@ -199,7 +199,7 @@ class EsMapping
 
     private function addColumn(array $type)
     {
-        $this->mapping['mappings']['properties'][] = $type;
+        $this->mapping['mappings']['properties'][key($type)] = $type[key($type)];
     }
 
     private function baseMapping(string $type, array $mapping)
