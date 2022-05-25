@@ -20,7 +20,7 @@ Access the config folder and change the settings of the esquery.php file.
 ###### For more information about mapping types: https://www.elastic.co/guide/en/elasticsearch/reference/current/mapping-types.html
 
 ```
-$build = new ESQuery('MY_INDEX');
+$build = EsQ::index('my_index');
 $response = $build->createIndex([
         'mappings' => [
             'properties' => [
@@ -39,7 +39,7 @@ $response = $build->createIndex([
 ##### Now you can create your first document
 
 ```
-$build = new ESQuery('MY_INDEX');
+$build = EsQ::index('my_index');
 $response = $build->create([
         'parent_id' => 1,
         'created_at' => '2022-02-26 23:44:00',
@@ -48,7 +48,7 @@ $response = $build->create([
 
 ##### Find your document
 ```
-$build = new ESQuery('MY_INDEX');
+$build = EsQ::index('my_index');
 $response = $build->where('parent_id', 1)->first(); // Example 1
 $response = $build->where('parent_id', '=', 1)->first(); // Example 2
 $response = $build->where('parent_id', 1)->get(); // Example 3
@@ -57,31 +57,31 @@ $response = $build->where('created_at', '>=' '2022-02-26'))->get(); // Example 4
 
 ##### Performing an aggregation
 ```
-$build = new ESQuery('MY_INDEX');
+$build = EsQ::index('my_index');
 $response = $build->where('parent_id', 1)->sum('price', 'total_price')->get(); // Use get() for aggregations
 ```
 
 ##### Delete your document
 ```
-$build = new ESQuery('MY_INDEX');
+$build = EsQ::index('my_index');
 $response = $build->where('parent_id', 1)->delete(); // Example 1 delete with conditions
 $response = $build->delete(5); // Example 2 delete by ID
 ```
 
 ##### Delete your index
 ```
-$build = new ESQuery('MY_INDEX');
+$build = EsQ::index('my_index');
 $response = $build->deleteIndex(); 
 ```
 
 ##### How you can attach relation
 ```
-$build = new ESQuery('MY_INDEX');
+$build = EsQ::index('my_index');
 $response = $build->with('category', 'id', 'group_id')->get();
 
 OR
 
-$build = new ESQuery('MY_INDEX');
+$build = EsQ::index('my_index');
 $response = $build->with('category', 'id', 'group_id', function (QueryBuilder $query) {
     $query->where('is_active', 1)->withTrashed->get();
 })->get();

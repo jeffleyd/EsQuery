@@ -54,20 +54,17 @@ class EsQuery extends EsConditions
     protected array $beginConstruct;
 
     /**
-     * @param string $index
      * @param bool $constantScore
      * @throws AuthenticationException
      */
-    public function __construct(string $index, public bool $constantScore = true)
+    public function __construct(public bool $constantScore = false)
     {
-        $this->index = strtolower(config('esquery.prefix').$index.config('esquery.suffix'));
         $this->client = ClientBuilder::create()
             ->setBasicAuthentication(config('esquery.username'), config('esquery.password'))
             ->setHosts(config('esquery.host'))
             ->build();
 
         $this->query = [
-            'index' => $this->index,
             'body' => []
         ];
 
@@ -80,6 +77,34 @@ class EsQuery extends EsConditions
         $this->query['body'] = $this->beginConstruct;
 
         $this->instance = $this;
+    }
+
+    /**
+     * @param bool $constantScore
+     * @return $this
+     */
+    public function constantScore(bool $constantScore = false): self
+    {
+        if ($constantScore) {
+            $this->beginConstruct = ['query' => ['constant_score' => ['filter' => ['bool' => []]]]];
+        } else {
+            $this->beginConstruct = ['query' => ['bool' => []]];
+        }
+
+        $this->query['body'] = $this->beginConstruct;
+
+        return $this;
+    }
+
+    /**
+     * @param string $index
+     * @return $this
+     */
+    public function index(string $index): self
+    {
+        $this->index = strtolower(config('esquery.prefix').$index.config('esquery.suffix'));
+        $this->query['index'] = $this->index;
+        return $this;
     }
 
     /**
