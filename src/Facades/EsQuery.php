@@ -4,7 +4,7 @@ namespace Facades;
 
 use Illuminate\Support\Facades\Facade;
 
-class EsQ extends Facade
+class EsQuery extends Facade
 {
     protected static function getFacadeAccessor(): string
     {
