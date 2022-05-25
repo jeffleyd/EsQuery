@@ -160,7 +160,9 @@ class EsMapping
      */
     public function insert()
     {
-        $this->esQuery->createIndex($this->mapping);
+        if (!$this->esQuery->existsIndex()) {
+            $this->esQuery->createIndex($this->mapping);
+        }
     }
 
     /**
@@ -168,7 +170,9 @@ class EsMapping
      */
     public function update()
     {
-        $this->esQuery->mapping($this->mapping['mappings']);
+        if ($this->esQuery->existsIndex()) {
+            $this->esQuery->mapping($this->mapping['mappings']);
+        }
     }
 
     public function drop()
