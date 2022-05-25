@@ -11,6 +11,16 @@ class EsQueryProvider extends ServiceProvider
         $this->publishFiles();
     }
 
+    /**
+     * Register the application services.
+     *
+     * @return void
+     */
+    public function register()
+    {
+        $this->app->bind('EsQuery', fn() => new EsQuery);
+    }
+
     protected function publishFiles()
     {
         $this->publishes([
