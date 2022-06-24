@@ -83,9 +83,9 @@ OR
 
 $build = EsQuery::index('my_index');
 $response = $build->with('category', 'id', 'group_id', function (QueryBuilder $query) {
-    $query->where('is_active', 1)->withTrashed->get();
+    return $query->where('is_active', 1);
 })->with('boss', 'id', 'boss_id', function (QueryBuilder $query) {
-    $query->where('is_active', 1)->withTrashed->get();
+    return $query->where('is_active', 1);
 })->get();
 ```
 
