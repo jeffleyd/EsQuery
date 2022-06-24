@@ -8,14 +8,14 @@ use Elastic\Elasticsearch\Exception\AuthenticationException;
 class EsMapping
 {
     protected EsQuery $esQuery;
-    protected array $mapping = [];
+    public array $mapping = [];
 
     /**
      * @throws AuthenticationException
      */
     public function __construct(string $index)
     {
-        $this->esQuery = new EsQuery($index);
+        $this->esQuery = (new EsQuery)->index($index);
     }
 
     /**

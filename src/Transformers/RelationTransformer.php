@@ -84,7 +84,7 @@ class RelationTransformer
         }
 
         if (!isset($result[strtolower($relationName)])) {
-            $result[strtolower($relationName)] = [];
+            $result[strtolower($relationName)] = $relation['primary_key'] === 'id' ? null : [];
         } else {
             if (count($result[strtolower($relationName)]) == 1) {
                 $result[strtolower($relationName)] = $result[strtolower($relationName)][0];

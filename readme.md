@@ -36,6 +36,47 @@ $response = $build->createIndex([
     ]);
 ```
 
+##### If you want to add a new index, you can do it like this
+##### Create a migration file and extend the EsScheme class
+
+```
+    public function up()
+    {
+        EsScheme::create('bosses', function (EsMapping $table) {
+            $table->integer('id');
+            $table->string('name');
+            $table->string('email');
+            $table->nested('json');
+            $table->timestamp('created_at');
+            $table->timestamp('updated_at');
+            
+            // If you want to use a simple analyzer, you can add the following line.
+            $table->setDefaultAnalyzer();
+
+            // If you want to use a custom analyzer, you can use the following:
+            $table->mapping['settings'] = [
+                'analysis' => [
+                    'default_analyze' => [
+                        'type' => 'custom',
+                        'tokenizer' => 'whitespace',
+                        'char_filter' => [
+                            'html_strip'
+                        ],
+                        'filter' => [
+                            'lowercase'
+                        ]
+                    ]
+                ]
+            ];
+        });
+    }
+    
+    public function down()
+    {
+        EsScheme::dropIfExists('boss');
+    }
+```
+
 ##### Now you can create your first document
 
 ```
