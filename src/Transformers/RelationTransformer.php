@@ -13,17 +13,56 @@ class RelationTransformer
     {
     }
 
-    public function transform(array $resultArray): mixed
+    public function transform(array $resultArray): array
     {
         $newResult = [];
         if (count($this->esQuery->with)) {
+
+            $this->fetchDataForWith($resultArray);
+
             foreach ($resultArray as $result) {
                 $newResult[] = $this->attachRelation($result);
             }
+
             $resultArray = $newResult;
         }
 
         return $resultArray;
+    }
+
+    private function fetchDataForWith(array $resultArray): void
+    {
+        $newWith = [];
+
+        foreach ($this->esQuery->with as $relation) {
+            $relation_ids = [];
+
+            foreach ($resultArray as $result) {
+                if ($result[$relation['foreign_key']]) {
+                    $relation_ids[] = $result[$relation['foreign_key']];
+                }
+            }
+
+            /** @var Model $class */
+            $class = 'App\\Models\\'.$relation['model'];
+
+            if (!class_exists($class)) {
+                $class = $relation['model'];
+            }
+
+            $queryBuild = $class::whereIn($relation['primary_key'], $relation_ids);
+
+            if ($relation['closure']) {
+                $closure = $relation['closure'];
+                $relation['data'] = $closure($queryBuild)->get();
+            } else {
+                $relation['data'] = $queryBuild->get();
+            }
+
+            $newWith[] = $relation;
+        }
+
+        $this->esQuery->with = $newWith;
     }
 
     /**
@@ -34,26 +73,22 @@ class RelationTransformer
     private function attachRelation(array $result): array
     {
         foreach ($this->esQuery->with as $relation) {
-
-            /** @var Model $class */
-            $class = 'App\\Models\\'.$relation['model'];
             $arrayPath = explode("\\", $relation['model']);
             $relationName = count($arrayPath) > 1 ? $arrayPath[count($arrayPath) - 1] : $relation['model'];
-            $foreignKeyValue = $result[$relation['foreign_key']];
 
-            if (!class_exists($class)) {
-                $class = $relation['model'];
+            foreach ($relation['data'] as $data) {
+                if ($data[$relation['primary_key']] == $result[$relation['foreign_key']]) {
+                    $result[strtolower($relationName)][] = $data;
+                }
             }
+        }
 
-            $queryBuild = $class::where($relation['primary_key'], $foreignKeyValue);
-
-            if ($relation['closure']) {
-                $closure = $relation['closure'];
-                $result[strtolower($relationName)] = $closure($queryBuild);
-            } else {
-                $result[strtolower($relationName)] = $queryBuild->get()->toArray();
+        if (!isset($result[strtolower($relationName)])) {
+            $result[strtolower($relationName)] = [];
+        } else {
+            if (count($result[strtolower($relationName)]) == 1) {
+                $result[strtolower($relationName)] = $result[strtolower($relationName)][0];
             }
-
         }
 
         return $result;

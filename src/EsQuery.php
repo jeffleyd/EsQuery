@@ -43,6 +43,12 @@ class EsQuery extends EsConditions
     public array $with = [];
 
     /**
+     * Used just for search query.
+     * @var bool
+     */
+    public bool $constantScore = false;
+
+    /**
      * @var EsQuery
      */
     protected EsQuery $instance;
@@ -54,28 +60,17 @@ class EsQuery extends EsConditions
     protected array $beginConstruct;
 
     /**
-     * @param bool $constantScore
      * @throws AuthenticationException
      */
-    public function __construct(public bool $constantScore = false)
+    public function __construct()
     {
         $this->client = ClientBuilder::create()
             ->setBasicAuthentication(config('esquery.username'), config('esquery.password'))
             ->setHosts(config('esquery.host'))
             ->build();
 
-        $this->query = [
-            'body' => []
-        ];
-
-        if ($constantScore) {
-            $this->beginConstruct = ['query' => ['constant_score' => ['filter' => ['bool' => []]]]];
-        } else {
-            $this->beginConstruct = ['query' => ['bool' => []]];
-        }
-
-        $this->query['body'] = $this->beginConstruct;
-
+        $this->beginConstruct = ['query' => ['bool' => []]];
+        $this->setBaseStructure();
         $this->instance = $this;
     }
 
@@ -83,7 +78,7 @@ class EsQuery extends EsConditions
      * @param bool $constantScore
      * @return $this
      */
-    public function constantScore(bool $constantScore = false): self
+    public function constantScore(bool $constantScore): self
     {
         if ($constantScore) {
             $this->beginConstruct = ['query' => ['constant_score' => ['filter' => ['bool' => []]]]];
@@ -92,6 +87,7 @@ class EsQuery extends EsConditions
         }
 
         $this->query['body'] = $this->beginConstruct;
+        $this->constantScore = $constantScore;
 
         return $this;
     }
@@ -322,5 +318,10 @@ class EsQuery extends EsConditions
         return $this->client->indices()->delete([
             'index' => $this->index
         ])->asArray();
+    }
+
+    public function setBaseStructure(): void
+    {
+        $this->query['body'] = $this->beginConstruct;
     }
 }

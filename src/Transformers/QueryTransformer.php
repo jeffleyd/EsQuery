@@ -32,6 +32,9 @@ class QueryTransformer implements ResultTransformerContract
         /** Attach Relations */
         $output = (new RelationTransformer($this->esQuery))->transform($output);
 
+        /** Reset query */
+        $this->esQuery->setBaseStructure();
+
         return $output;
     }
 

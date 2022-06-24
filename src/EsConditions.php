@@ -164,6 +164,37 @@ class EsConditions
      * @param string $as
      * @return EsQuery
      */
+    public function groupByDate(string $column, string $as, string $calendarInterval = 'month'): EsQuery
+    {
+        $this->hasAggregator = true;
+        $this->query['body']['aggs'][$as]['date_histogram'] = [
+            'field' => $column,
+            "calendar_interval" => $calendarInterval,
+            "format" => "yyyy-MM-dd"
+        ];
+        return $this->instance;
+    }
+
+    /**
+     * @param string $column
+     * @param string $as
+     * @return EsQuery
+     */
+    public function groupBy(string $column, string $as, int $size = 5): EsQuery
+    {
+        $this->hasAggregator = true;
+        $this->query['body']['aggs'][$as]['terms'] = [
+            'field' => $column,
+            "size" => $size
+        ];
+        return $this->instance;
+    }
+
+    /**
+     * @param string $column
+     * @param string $as
+     * @return EsQuery
+     */
     public function avg(string $column, string $as): EsQuery
     {
         $this->hasAggregator = true;
